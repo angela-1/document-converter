@@ -18,7 +18,8 @@ namespace document_converter
         [Argument(0, Description = "Full path of docx file or folder")]
         public string FilePath { get; }
 
-        [Option(ShortName = "f", LongName = "format", Description = "Output format, pdf, docx or txt")]
+        [Option(Description = "Output format, pdf, docx or txt", LongName = "format", ShortName = "f")]
+        [AllowedValues("docx", "pdf", "txt", IgnoreCase = true)]
         public string Format { get; }
 
         private static List<string> FilterDocx(List<string> filepaths)
@@ -57,10 +58,10 @@ namespace document_converter
 
         private void OnExecute()
         {
-            bool v = FilePath == null;
-            if (v)
+            if (FilePath == null)
             {
                 Console.WriteLine("No input, please input file or folder");
+                
                 return;
             }
             bool isFolder = Directory.Exists(FilePath);
